@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 class CentroidTracker:
-    def __init__(self, max_disappeared=50, max_distance=100):
+    def __init__(self, max_disappeared=20, max_distance=100):
         self.next_object_id = 0
         self.objects = OrderedDict()
         self.disappeared = OrderedDict()
@@ -126,6 +126,7 @@ async def process_fall_rule(
     try:
         # Ensure frames_folder exists
         frames_folder = "frames/fall_frames"
+        os.makedirs(frames_folder, exist_ok=True)
 
         # Constants
         ASPECT_RATIO_THRESHOLD = 1.2

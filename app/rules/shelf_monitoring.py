@@ -3,6 +3,7 @@ import numpy as np
 from datetime import datetime, timedelta
 from app.db.database import get_collection
 import logging
+from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +18,7 @@ async def process_shelf_occupancy_rule(frame: np.ndarray, camera_name: str, sess
         logger.info("MongoDB connection established for shelf occupancy")
         
         # Run YOLO detection with custom model
-        results = yolo_manager.predict(frame, conf_threshold=0.65, model_path="shelf occupancy.pt")
+        results = yolo_manager.predict(frame, conf_threshold=0.65, model_path=settings.MODEL_PATH_SHELF_OCCUPANCY)
         
         # Lists to store shelf and empty boxes
         shelf_boxes = []

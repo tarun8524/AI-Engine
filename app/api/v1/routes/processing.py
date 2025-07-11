@@ -33,7 +33,7 @@ async def init_mongo_and_yolo():
 
         # Initialize shared YOLO manager
         shared_yolo_manager = YOLOManager()
-        await shared_yolo_manager.initialize_model(settings.YOLO_MODEL_PATH)
+        await shared_yolo_manager.initialize_model(settings.YOLO_MODEL_PATH_8m)
         logger.info("Shared YOLO manager initialized successfully")
         
         # Fetch camera details

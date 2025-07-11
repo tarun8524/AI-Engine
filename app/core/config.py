@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings #type: ignore
 from typing import Dict, List, Any
+import os
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Video Analytics System"
@@ -30,8 +31,9 @@ class Settings(BaseSettings):
     ]
     
     # YOLO Configuration
-    YOLO_MODEL_PATH: str = "yolov8m.pt"
-    YOLO_CONFIDENCE_THRESHOLD: float = 0.7
+    YOLO_MODEL_PATH_8m: str = os.path.join("app","models", "yolov8m.pt")
+    MODEL_PATH_SHELF_OCCUPANCY: str = os.path.join("app","models", "shelf occupancy.pt")
+    YOLO_CONFIDENCE_THRESHOLD: float = 0.6
     FRAME_INTERVAL: int = 1
     
     # Processing Configuration

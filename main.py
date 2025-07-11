@@ -30,7 +30,7 @@ async def lifespan(app: FastAPI):
 
         logger.info("Initializing YOLO model...")
         yolo_manager = YOLOManager()
-        await yolo_manager.initialize_model(settings.YOLO_MODEL_PATH)
+        await yolo_manager.initialize_model(settings.YOLO_MODEL_PATH_8m)
         app.state.yolo_manager = yolo_manager
         logger.info("YOLO model initialized successfully")
 

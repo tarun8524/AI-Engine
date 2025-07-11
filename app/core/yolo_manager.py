@@ -5,6 +5,7 @@ from ultralytics import YOLO #type: ignore
 import cv2 #type: ignore
 import numpy as np
 import logging
+from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +28,7 @@ class YOLOManager:
             self.model_lock = threading.Lock()
             self.initialized = False
     
-    async def initialize_model(self, model_path: str = "yolov8m.pt"):
+    async def initialize_model(self, model_path: str = settings.YOLO_MODEL_PATH_8m):
         """Initialize a YOLO model for a specific model path"""
         try:
             with self.model_lock:
@@ -40,7 +41,7 @@ class YOLOManager:
             logger.error(f"Failed to load YOLO model {model_path}: {e}")
             raise
     
-    def predict(self, frame: np.ndarray, conf_threshold: float = 0.7, model_path: str = "yolov8m.pt") -> List[Dict[str, Any]]:
+    def predict(self, frame: np.ndarray, conf_threshold: float = 0.7, model_path: str = settings.YOLO_MODEL_PATH_8m) -> List[Dict[str, Any]]:
         """Run inference on frame and return detections using the specified model"""
         if not self.initialized or model_path not in self.models:
             raise RuntimeError(f"YOLO model {model_path} not initialized")

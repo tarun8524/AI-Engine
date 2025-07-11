@@ -11,6 +11,7 @@ from app.core.yolo_manager import YOLOManager
 from app.core.spatial_intelligence import SpatialIntelligence
 from app.core.config import settings
 from app.rules.fall import CentroidTracker
+from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -235,9 +236,9 @@ class CameraProcessor:
         
         try:
             # Initialize YOLO models
-            await self.yolo_manager.initialize_model("yolov8m.pt")
+            await self.yolo_manager.initialize_model(settings.YOLO_MODEL_PATH_8m)
             if "Shelf Occupancy Monitoring" in self.rules:
-                await self.yolo_manager.initialize_model("shelf occupancy.pt")
+                await self.yolo_manager.initialize_model(settings.MODEL_PATH_SHELF_OCCUPANCY)
             
             for rule_name in self.rules:
                 if rule_name in self.rule_functions:
@@ -285,7 +286,7 @@ class CameraProcessor:
                 await self.write_frame_async("Shelf Occupancy Monitoring", frame_copy)
             
             # Process other rules with shared YOLO model and spatial data
-            detections = self.yolo_manager.predict(frame, settings.YOLO_CONFIDENCE_THRESHOLD, model_path="yolov8m.pt")
+            detections = self.yolo_manager.predict(frame, settings.YOLO_CONFIDENCE_THRESHOLD, model_path=settings.YOLO_MODEL_PATH_8m)
             spatial_data = self.spatial_intelligence.analyze_detections(
                 detections, self.rule_states['Entry Exit']
             )
